@@ -1,12 +1,21 @@
-import {Component, NgZone, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {SocketService} from "./socket.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'home-component',
   template: `
-    <h1>Home Component</h1>
+    <button md-button>FLAT</button>
+<button md-raised-button>RAISED</button>
+<button md-icon-button>
+   <md-icon class="md-24">favorite</md-icon>
+</button>
+<button md-fab>
+   <md-icon class="md-24">add</md-icon>
+</button>
+<button md-mini-fab>
+   <md-icon class="md-24">add</md-icon>
+</button>
     `,
 })
 export class HomeComponent {
@@ -25,10 +34,10 @@ export class HomeComponent {
       });
 
     this.socketService.on$('user')
-      .mergeMap(x => getReverse$)
-      .subscribe((x) => {
-        console.log(x);
-        this.data = x;
+      .combineLatest(getReverse$)
+      .subscribe(([event, newCollection]) => {
+        console.log('event', event);
+        console.log('collection', newCollection);
       });
   }
 }
