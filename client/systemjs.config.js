@@ -23,16 +23,16 @@
     'button-toggle',
     'tabs',
     'toolbar',
-    'tooltip',
+    'tooltip'
   ];
   /** User packages configuration. */
   var packages = {
+    // Set the default extension for the root package, because otherwise the demo-app can't
+    // be built within the production mode. Due to missing file extensions.
     '@angular2-material/core': {
       main: './core.umd.js',
       defaultExtension: 'js'
     },
-    // Set the default extension for the root package, because otherwise the demo-app can't
-    // be built within the production mode. Due to missing file extensions.
     '.': {
       defaultExtension: 'js'
     },
@@ -57,6 +57,14 @@
     },
     'ng2-material': {
       main: './index.js',
+      defaultExtension: 'js'
+    },
+    'semantic-ui': {
+      main: './dist/semantic.js',
+      defaultExtension: 'js'
+    },
+    'jquery': {
+      main: './dist/jquery.js',
       defaultExtension: 'js'
     }
   };
@@ -92,7 +100,9 @@
       'rxjs': 'npm:rxjs',
       'angular2-in-memory-web-api': 'npm:client-in-memory-web-api',
       'sails.io.js': 'npm:sails.io.js',
-      'socket.io-client': 'npm:socket.io-client'
+      'socket.io-client': 'npm:socket.io-client',
+      'semantic-ui': 'npm:semantic-ui',
+      'jquery': 'npm:jquery'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: packages
