@@ -15,11 +15,11 @@ export class SocketService implements Resolve<any> {
     this.socket = io.sails.connect();
   }
 
-  private _invokeMethode(method: string, data: any, path: string): Observable<any> {
+  private _invokeMethode(method: string, path: string, data: any = null): Observable<any> {
     return Observable.create((observer: Observer<any>) => {
-      this.socket[method](path, data, (response: any) => {
+      this.socket[method](path, data, (response: JSON, jwres: any) => {
         this.ngZone.run(() => {
-          observer.next(response);
+          observer.next({response: response, jwres: jwres});
         });
       });
       return () => {
@@ -27,12 +27,12 @@ export class SocketService implements Resolve<any> {
     });
   }
 
-  get$(path: string): Observable<any> {
-    return this._invokeMethode('get', null, path);
+  get$(path: string, data: any = null): Observable<any> {
+    return this._invokeMethode('get', path, data);
   }
 
   post$(path: string, data: any): Observable<any> {
-    return this._invokeMethode('post', data, path);
+    return this._invokeMethode('post', path, data);
   }
 
   on$(path: string): Observable<any> {

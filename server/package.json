@@ -20,12 +20,13 @@
     "grunt-sync": "0.5.2",
     "include-all": "~0.1.6",
     "rc": "1.0.1",
+    "rxjs": "^5.0.0-beta.12",
     "sails": "~0.12.4",
     "sails-disk": "~0.10.9"
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "main": "app.js",
   "repository": {
@@ -33,5 +34,11 @@
     "url": "git://github.com/theuylimpanont/testProject.git"
   },
   "author": "theuylimpanont",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.2",
+    "gulp-typescript": "^2.14.0",
+    "gulp-util": "^3.0.7"
+  }
 }

@@ -1,11 +1,15 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {SocketService} from "./socket.service";
+import {Observable} from "rxjs/Rx";
 
 @Component({
   selector: 'home-component',
   template: `
         <h1>Home Component</h1>
+        <pre>
+            {{data | json}}
+        </pre>
     `,
 })
 export class HomeComponent {
@@ -16,18 +20,24 @@ export class HomeComponent {
     let data: any = route.snapshot.data;
     this.socketService = data.socket;
 
-    let getReverse$ = this.socketService.get$('/user').map(x => x.reverse());
+    let getUser$ = this.socketService.get$('/user').map(x => x.response.reverse());
 
-    getReverse$
+    getUser$
       .subscribe((x) => {
         this.data = x;
       });
 
+    this.socketService.on$('user').subscribe((event: any) => {
+      console.log(event);
+    });
+
     this.socketService.on$('user')
-      .combineLatest(getReverse$)
-      .subscribe(([event, newCollection]) => {
-        console.log('event', event);
-        console.log('collection', newCollection);
+      .merge(this.socketService.on$('connect'))
+      .mergeMap(() => getUser$)
+      .subscribe( (users: any) => {
+        this.data = users;
       });
+
+
   }
 }
