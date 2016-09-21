@@ -1,3 +1,5 @@
+*.log
+*.log.*
 .idea
 typings/**
 node_modules
@@ -16,3 +18,4 @@ _temp
 !systemjs.config.js
 !typings/typings.d.ts
 !wallaby.js
+
