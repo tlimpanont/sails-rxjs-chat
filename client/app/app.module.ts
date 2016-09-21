@@ -5,9 +5,10 @@ import {routing, appRoutingProviders}  from './app.routing';
 import {AppComponent}  from './app.component';
 import {HomeComponent} from "./home.component";
 import {SocketService} from "./socket.service";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
-  imports: [BrowserModule, routing],
+  imports: [BrowserModule, HttpModule, routing],
   declarations: [AppComponent, HomeComponent],
   providers: [
     appRoutingProviders,

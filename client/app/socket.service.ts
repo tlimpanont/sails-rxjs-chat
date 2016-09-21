@@ -1,6 +1,7 @@
 import {Observable, Observer, Subject} from 'rxjs/Rx';
 import {Resolve} from '@angular/router';
 import {Injectable, NgZone} from "@angular/core";
+import {Http} from "@angular/http";
 var socketIOClient: any = require('socket.io-client');
 var sailsIOClient: any = require('sails.io.js');
 var io: any = sailsIOClient(socketIOClient);
@@ -9,7 +10,7 @@ var io: any = sailsIOClient(socketIOClient);
 export class SocketService implements Resolve<any> {
   socket: any;
 
-  constructor(public ngZone: NgZone) {
+  constructor(public ngZone: NgZone, public http: Http) {
     io.sails.url = 'http://localhost:1337/';
     io.sails.autoConnect = false;
     this.socket = io.sails.connect();
@@ -50,12 +51,17 @@ export class SocketService implements Resolve<any> {
   resolve(): Observable<any>|Promise<any>|any {
 
     return new Promise((resolve: any, reject: any) => {
-      this.socket.on('connect', () => {
-        resolve(this);
-      });
-      this.socket.on('error', () => {
-        reject(null);
-      });
+
+      this.http.get('http://localhost:1337/__getcookie')
+        .retryWhen(error => error.delay(3000))
+        .subscribe(() => {
+          this.socket = io.sails.connect();
+          this.socket.on('connect', () => {
+            resolve(this);
+          });
+        }, () => {
+          reject(this);
+        });
     });
   }
 }
