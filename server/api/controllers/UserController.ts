@@ -19,6 +19,6 @@ module.exports = {
         User.publishDestroy(destroyedUser.id, req, {
           previous: destroyedUser
         });
-      }, err => res.negotiate(err), () => res.json('ok!')); // sdsad
+      }, err => res.negotiate(err), () => res.ok());
   }
 };

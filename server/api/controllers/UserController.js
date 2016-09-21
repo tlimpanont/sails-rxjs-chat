@@ -15,6 +15,6 @@ module.exports = {
             User.publishDestroy(destroyedUser.id, req, {
                 previous: destroyedUser
             });
-        }, function (err) { return res.negotiate(err); }, function () { return res.json('ok!'); }); // sdsad
+        }, function (err) { return res.negotiate(err); }, function () { return res.ok(); });
     }
 };
