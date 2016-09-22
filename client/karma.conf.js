@@ -42,6 +42,11 @@ module.exports = function(config) {
       'node_modules/zone.js/dist/async-test.js',
       'node_modules/zone.js/dist/fake-async-test.js',
 
+      // jQuery
+      { pattern: 'node_modules/jquery/**/*.js', included: false, watched: false },
+      // semantic-ui
+      { pattern: 'node_modules/semantic-ui/**/*.js', included: false, watched: false },
+
       // RxJs
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
