@@ -1,7 +1,7 @@
 import {ModuleWithProviders, Injectable} from '@angular/core';
 import {Routes, RouterModule, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {HomeComponent} from "./home.component";
-import {SocketService} from "./socket.service";
+import {SailsSocketService} from "./sails-socket.service";
 
 const appRoutes: Routes = [
   // { path: 'hero/:id', component: HeroDetailComponent },
@@ -13,7 +13,7 @@ const appRoutes: Routes = [
   //     title: 'Heroes List'
   //   }
   // },
-  {path: '', component: HomeComponent, resolve: {socket: SocketService}},
+  {path: '', component: HomeComponent, resolve: {socket: SailsSocketService}},
   // { path: '**', component: AppComponent },
   // { path: '**', component: PageNotFoundComponent }
 ];

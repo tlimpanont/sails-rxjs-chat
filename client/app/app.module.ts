@@ -4,7 +4,7 @@ import {routing, appRoutingProviders}  from './app.routing';
 
 import {AppComponent}  from './app.component';
 import {HomeComponent} from "./home.component";
-import {SocketService} from "./socket.service";
+import {SailsSocketService} from "./sails-socket.service";
 import {HttpModule} from "@angular/http";
 import {BehaviorSubject} from "rxjs/Rx";
 
@@ -13,7 +13,7 @@ import {BehaviorSubject} from "rxjs/Rx";
   declarations: [AppComponent, HomeComponent],
   providers: [
     appRoutingProviders,
-    SocketService,
+    SailsSocketService,
     {provide: 'connection$', useValue: new BehaviorSubject<any>({connected: false})}
   ],
   bootstrap: [AppComponent]

@@ -7,7 +7,7 @@ var sailsIOClient: any = require('sails.io.js');
 var io: any = sailsIOClient(socketIOClient);
 
 @Injectable()
-export class SocketService implements Resolve<any> {
+export class SailsSocketService implements Resolve<any> {
   socket: any;
 
   constructor(public ngZone: NgZone,
@@ -59,11 +59,11 @@ export class SocketService implements Resolve<any> {
         .retryWhen(error => error.delay(3000))
         .subscribe(() => {
           this.socket = io.sails.connect();
-          this.on$('connect').subscribe( () => {
+          this.on$('connect').subscribe(() => {
             this.connection$.next({connected: true});
             resolve(this);
           });
-          this.on$('disconnect').subscribe( () => {
+          this.on$('disconnect').subscribe(() => {
             this.connection$.next({connected: false});
           });
         }, () => {

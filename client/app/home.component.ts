@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {SocketService} from "./socket.service";
+import {SailsSocketService} from "./sails-socket.service";
 import {Observable} from "rxjs/Rx";
 
 @Component({
@@ -17,7 +17,7 @@ import {Observable} from "rxjs/Rx";
     `,
 })
 export class HomeComponent {
-  socketService: SocketService;
+  socketService: SailsSocketService;
   data: any;
 
   constructor(public route: ActivatedRoute) {
