@@ -5,29 +5,19 @@ import {BehaviorSubject} from "rxjs/Rx";
 declare var jQuery:any;
 
 @Component({
+  moduleId: module.id,
   selector: 'my-app',
-  template: `
-     <div class="ui raised very padded text container segment">
-       <div class="ui icon message orange" #alert *ngIf="!connected">
-        <i class="notched circle loading icon"></i>
-        <div class="content">
-          <div class="header">
-            Reconnecting...
-          </div>
-        </div>
-      </div>
-        <h1 class="ui header">Rxjs Sails Chat</h1>
-        <router-outlet></router-outlet>
-    </div>
-    `,
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   connected: boolean = true;
   @ViewChild('alert') alert:ElementRef;
 
   constructor(@Inject('connection$') public connection$:BehaviorSubject<any>) {
-    connection$.subscribe( (connection: any) => {
+    this.connection$.subscribe( (connection: any) => {
       this.connected = connection.connected;
     });
+  }
+  ngAfterViewInit() {
   }
 }
