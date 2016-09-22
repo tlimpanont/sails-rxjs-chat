@@ -6,10 +6,14 @@ import {Observable} from "rxjs/Rx";
 @Component({
   selector: 'home-component',
   template: `
-        <h1>Home Component</h1>
-        <pre>
-            {{data | json}}
-        </pre>
+        <div class="ui middle aligned animated list">
+          <div class="item" *ngFor="let user of data">
+            <img class="ui avatar image" src="http://semantic-ui.com/images/avatar/small/daniel.jpg">
+            <div class="content">
+              <div class="header">{{user.name}}</div>
+            </div>
+          </div>
+        </div>
     `,
 })
 export class HomeComponent {
@@ -37,7 +41,6 @@ export class HomeComponent {
       .subscribe( (users: any) => {
         this.data = users;
       });
-
 
   }
 }

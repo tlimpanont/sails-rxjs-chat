@@ -6,6 +6,7 @@ import {AppComponent}  from './app.component';
 import {HomeComponent} from "./home.component";
 import {SocketService} from "./socket.service";
 import {HttpModule} from "@angular/http";
+import {BehaviorSubject} from "rxjs/Rx";
 
 @NgModule({
   imports: [BrowserModule, HttpModule, routing],
@@ -13,6 +14,7 @@ import {HttpModule} from "@angular/http";
   providers: [
     appRoutingProviders,
     SocketService,
+    {provide: 'connection$', useValue: new BehaviorSubject<any>({connected: false})}
   ],
   bootstrap: [AppComponent]
 })

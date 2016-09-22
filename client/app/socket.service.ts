@@ -1,6 +1,6 @@
-import {Observable, Observer, Subject} from 'rxjs/Rx';
+import {Observable, Observer, Subject, BehaviorSubject} from 'rxjs/Rx';
 import {Resolve} from '@angular/router';
-import {Injectable, NgZone} from "@angular/core";
+import {Injectable, NgZone, Inject} from "@angular/core";
 import {Http} from "@angular/http";
 var socketIOClient: any = require('socket.io-client');
 var sailsIOClient: any = require('sails.io.js');
@@ -10,7 +10,10 @@ var io: any = sailsIOClient(socketIOClient);
 export class SocketService implements Resolve<any> {
   socket: any;
 
-  constructor(public ngZone: NgZone, public http: Http) {
+  constructor(public ngZone: NgZone,
+              public http: Http,
+              @Inject('connection$') public connection$: BehaviorSubject<any>) {
+
     io.sails.url = 'http://localhost:1337/';
     io.sails.autoConnect = false;
     this.socket = io.sails.connect();
@@ -45,7 +48,7 @@ export class SocketService implements Resolve<any> {
       });
       return () => {
       }
-    });
+    })
   }
 
   resolve(): Observable<any>|Promise<any>|any {
@@ -56,10 +59,15 @@ export class SocketService implements Resolve<any> {
         .retryWhen(error => error.delay(3000))
         .subscribe(() => {
           this.socket = io.sails.connect();
-          this.socket.on('connect', () => {
+          this.on$('connect').subscribe( () => {
+            this.connection$.next({connected: true});
             resolve(this);
           });
+          this.on$('disconnect').subscribe( () => {
+            this.connection$.next({connected: false});
+          });
         }, () => {
+          this.connection$.next({connected: false});
           reject(this);
         });
     });
