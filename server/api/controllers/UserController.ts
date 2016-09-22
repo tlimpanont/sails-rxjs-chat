@@ -1,5 +1,6 @@
 import {Observable} from 'rxjs/Rx';
 declare var User: any;
+declare var module: any;
 
 module.exports = {
   destroyAll: (req, res) => {
@@ -7,7 +8,7 @@ module.exports = {
       return Observable.fromPromise(User.destroy({id: x.id}))
     };
 
-    let find$ = Observable.fromPromise(User.find({}));
+    let find$:Observable<any> = Observable.fromPromise(User.find({}));
 
 
     find$
@@ -19,6 +20,6 @@ module.exports = {
         User.publishDestroy(destroyedUser.id, req, {
           previous: destroyedUser
         });
-      }, err => res.negotiate(err), () => res.ok());
+      }, err => res.negotiate(err), () => res.json({status: 'Real@ Nice!!!!?!'}));
   }
 };

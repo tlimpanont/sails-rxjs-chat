@@ -1,20 +1,20 @@
 "use strict";
-var Rx_1 = require('rxjs/Rx');
+const Rx_1 = require('rxjs/Rx');
 module.exports = {
-    destroyAll: function (req, res) {
-        var destroy$ = function (x) {
+    destroyAll: (req, res) => {
+        let destroy$ = (x) => {
             return Rx_1.Observable.fromPromise(User.destroy({ id: x.id }));
         };
-        var find$ = Rx_1.Observable.fromPromise(User.find({}));
+        let find$ = Rx_1.Observable.fromPromise(User.find({}));
         find$
-            .mergeMap(function (users) { return Rx_1.Observable.from(users); })
-            .mergeMap(function (user) {
-            return destroy$(user).map(function (x) { return x[0]; });
+            .mergeMap(users => Rx_1.Observable.from(users))
+            .mergeMap((user) => {
+            return destroy$(user).map(x => x[0]);
         })
-            .subscribe(function (destroyedUser) {
+            .subscribe((destroyedUser) => {
             User.publishDestroy(destroyedUser.id, req, {
                 previous: destroyedUser
             });
-        }, function (err) { return res.negotiate(err); }, function () { return res.ok(); });
+        }, err => res.negotiate(err), () => res.json({ status: 'Real@ Nice!!!!?!' }));
     }
 };

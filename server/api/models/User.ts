@@ -5,6 +5,9 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
+declare var User: any;
+declare var module: any;
+
 module.exports = {
   attributes: {
 
