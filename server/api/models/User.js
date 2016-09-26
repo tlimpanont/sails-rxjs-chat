@@ -7,3 +7,4 @@
 module.exports = {
     attributes: {}
 };
+//# sourceMappingURL=User.js.map

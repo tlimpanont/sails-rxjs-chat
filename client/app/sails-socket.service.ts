@@ -9,10 +9,10 @@ var io: any = sailsIOClient(socketIOClient);
 @Injectable()
 export class SailsSocketService implements Resolve<any> {
   socket: any;
+  public connection$: BehaviorSubject<any> = new BehaviorSubject<any>({connected: false});
 
   constructor(public ngZone: NgZone,
-              public http: Http,
-              @Inject('connection$') public connection$: BehaviorSubject<any>) {
+              public http: Http) {
 
     io.sails.url = 'http://localhost:1337/';
     io.sails.autoConnect = false;

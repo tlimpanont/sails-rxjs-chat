@@ -13,8 +13,7 @@ import {BehaviorSubject} from "rxjs/Rx";
   declarations: [AppComponent, HomeComponent],
   providers: [
     appRoutingProviders,
-    SailsSocketService,
-    {provide: 'connection$', useValue: new BehaviorSubject<any>({connected: false})}
+    SailsSocketService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@ import {Component, ViewChild, ElementRef, AfterViewInit, Inject} from '@angular/
 import 'node_modules/jquery/dist/jquery.js';
 import 'node_modules/semantic-ui/dist/semantic.js';
 import {BehaviorSubject} from "rxjs/Rx";
+import {SailsSocketService} from "./sails-socket.service";
 declare var jQuery:any;
 
 @Component({
@@ -13,8 +14,8 @@ export class AppComponent {
   connected: boolean = true;
   @ViewChild('alert') alert:ElementRef;
 
-  constructor(@Inject('connection$') public connection$:BehaviorSubject<any>) {
-    this.connection$.subscribe( (connection: any) => {
+  constructor(private _sailsSocket:SailsSocketService) {
+    this._sailsSocket.connection$.subscribe( (connection: any) => {
       this.connected = connection.connected;
     });
   }
